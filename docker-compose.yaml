@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+    nginx:
+        container_name: campaign-nginx
+        build:
+            context: docker/webserver
+            dockerfile: Dockerfile
+        restart: on-failure
+        depends_on:
+            - php
+        ports:
+            - "82:82"
+        tty: true
+        networks:
+            - agentcis
+        volumes:
+            - /docker/storage/logs/nginx/:/var/log/nginx
+            - .:/var/www/campaign/
+    php:
+        build:
+            context: docker/php
+            dockerfile: Dockerfile
+        container_name: campaign
+        volumes:
+            - ./:/var/www/campaign
+        networks:
+            - agentcis
+networks:
+    agentcis:
+        name: agentcis
