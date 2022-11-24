@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => 'master',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,22 @@ return [
     */
 
     'connections' => [
+        'master' => [
+            'read' => [
+                'host' => env('DB_REPLICA_HOST', env('DB_HOST')),
+            ],
+            'write' => [
+                'host' => env('DB_HOST', 'localhost'),
+            ],
+            'driver' => 'mysql',
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
@@ -61,6 +77,23 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+        ],
+
+        'tenant' => [
+            'read' => [
+                'host' => env('DB_REPLICA_HOST', env('DB_HOST')),
+            ],
+            'write' => [
+                'host' => env('DB_HOST', 'localhost'),
+            ],
+            'driver' => 'mysql',
+            'database' => '',
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
         ],
 
         'pgsql' => [

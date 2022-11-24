@@ -42,6 +42,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     chmod +x /usr/local/bin/composer; \
     rm -rf /var/cache/apk/*;
 
+RUN pecl install -o -f redis \
+&&  rm -rf /tmp/pear \
+&&  docker-php-ext-enable redis
 
 WORKDIR /var/www/campaign
 
